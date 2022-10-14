@@ -38,6 +38,7 @@ export default function Register({ onRegister }) {
           className="login__input"
           required
           type="password"
+          placeholder="Пароль"
           value={password}
           onChange={handleLoginPassword}
         />

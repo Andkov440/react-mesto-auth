@@ -1,4 +1,4 @@
-import { baseUrlAuth, headers } from "../utils/utils";
+import { baseUrl } from "../utils/utils";
 
 const returnResult = (res) => {
   if (res.ok) {
@@ -8,27 +8,41 @@ const returnResult = (res) => {
 };
 
 export const register = (email, password) => {
-  return fetch(`${baseUrlAuth}/signup`, {
+  return fetch(`${baseUrl}/signup`, {
     method: "POST",
-    headers,
+    credentials: "include",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ email, password }),
   }).then((res) => returnResult(res));
 };
 
 export const authorize = (email, password) => {
-  return fetch(`${baseUrlAuth}/signin`, {
+  return fetch(`${baseUrl}/signin`, {
     method: "POST",
-    headers,
+    credentials: "include",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+  },
     body: JSON.stringify({ email: email, password: password }),
-  }).then((res) => returnResult(res));
+  }).then(res => {
+    return returnResult(res)
+});
 };
 
 export const getContent = (jwt) => {
-  return fetch(`${baseUrlAuth}/users/me`, {
+  return fetch(`${baseUrl}/users/me`, {
     method: "GET",
+    credentials: "include",
     headers: {
-      ...headers,
-      Authorization: `Bearer ${jwt}`,
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${jwt}`,
     },
-  }).then((res) => returnResult(res));
+  }).then(res => {
+    return returnResult(res)
+});
 };
